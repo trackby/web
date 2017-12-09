@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header } from 'components'
+// import { Header } from 'components'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import ComingSoonContainer from "../containers/ComingSoonContainer";

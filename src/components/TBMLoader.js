@@ -1,6 +1,6 @@
 import React from 'react'
 import pure from 'recompose/pure'
-import {Dimmer, Loader, Image, Segment} from 'semantic-ui-react'
+import {Dimmer, Loader} from 'semantic-ui-react'
 import styled from 'styled-components'
 
 const Container = styled.div`
