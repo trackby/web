@@ -1,4 +1,5 @@
 # Tbm Web
+Create `.env` file.  `.env.example` can be used as a template. 
 
 Once the installation is done, you can run some commands inside the project folder:
 
