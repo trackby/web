@@ -1,11 +1,11 @@
 import React from 'react'
-import { TBMLoader } from 'components'
+import { ImageHeader } from 'components'
 import { createStructuredSelector } from 'reselect'
 
 import { connect } from 'react-redux'
 
 const ComingSoonContainer = () =>
-      <TBMLoader />
+      <ImageHeader title='TrackBy.me' subtitle='Coming Soon' info='Track your favourite shows anywhere, anytime'/>
 
 
 const mapStateToProps = createStructuredSelector({
