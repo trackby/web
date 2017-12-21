@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from 'config'
 
 const apiSettings = () => {
-  const headers = localStorage.getItem('token') ? {Authorization: `Bearer${localStorage.getItem('token')}`} : {};
+  const headers = localStorage.getItem('token') ? {'x-access-token': localStorage.getItem('token')} : {};
   return {
     baseURL: config.apiURL,
     headers
@@ -11,19 +11,19 @@ const apiSettings = () => {
 
 class Rest {
 
-  static post(url, parameter) {
+  static async post(url, parameter) {
     return axios.post(url, parameter, apiSettings());
   }
 
-  static patch(url, parameter) {
+  static async patch(url, parameter) {
     return axios.patch(url, parameter, apiSettings());
   }
 
-  static get(url, parameter = {}) {
+  static async get(url, parameter = {}) {
     return axios.get(url, Object.assign({}, {params: parameter}, apiSettings()));
   }
 
-  static del(url) {
+  static async del(url) {
     return axios.delete(url, apiSettings());
   }
 }
