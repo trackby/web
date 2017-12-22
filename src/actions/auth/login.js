@@ -10,11 +10,15 @@ export const login = ({ username, password }) => async dispatch => {
     localStorage.setItem('token', loginData.token)
     dispatch({ type: AUTH_LOGIN_SUCCESS, payload: loginData.token })
   } catch (error) {
-    if (error.response.status === 401) {
-      dispatch({ type: AUTH_ERROR, payload: 'Wrong username and password combination' })
-    } else if (error.response.status === 404) {
-      dispatch({ type: AUTH_ERROR, payload: "Username doesn't exist" })
+    if (error.response) {
+      if (error.response.status === 401) {
+        dispatch({ type: AUTH_ERROR, payload: 'Wrong username and password combination' })
+      } else if (error.response.status === 404) {
+        dispatch({ type: AUTH_ERROR, payload: "Username doesn't exist" })
+      }
     } else {
+      // eslint-disable-next-line no-console
+      console.log(error)
       dispatch({ type: AUTH_ERROR, payload: 'Unknown error' })
     }
   }
