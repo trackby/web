@@ -20,7 +20,7 @@ class PrivateRoute extends React.Component {
 
   render() {
     const { status, path, component } = this.props
-    return status !== 'authenticated' ? <Redirect to="login" /> : <Route path={path} component={component} />
+    return status !== 'authenticated' ? <Redirect to="/login" /> : <Route path={path} component={component} />
   }
 }
 
