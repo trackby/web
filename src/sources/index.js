@@ -1,9 +1,6 @@
-import Rest from 'Rest'
+import Rest from './Rest'
 
-const authRegister = p => Rest.post('signup', p);
-const authLogin = p => Rest.post('auth', p);
+const authRegister = p => Rest.post('signup', p)
+const authLogin = p => Rest.post('auth', p)
 
-export{
-  authRegister,
-  authLogin
-}
+export { authRegister, authLogin }

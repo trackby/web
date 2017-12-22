@@ -1,20 +1,27 @@
 import React from 'react'
-// import { Header } from 'components'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import styled from 'styled-components'
-import ComingSoonContainer from "../containers/ComingSoonContainer";
+import pure from 'recompose/pure'
+import AuthRoute from './AuthRoute'
+import PrivateRoute from './PrivateRoute'
+import LogoutRoute from './LogoutRoute'
+import ComingSoonContainer from '../containers/ComingSoonContainer'
+import { RegisterContainer, LoginContainer } from '../containers'
 
-const Container = styled.div`text-align: center;`
+const Container = styled.div`
+  text-align: center;
+`
+const Routes = () => (
+  <Router>
+    <Container>
+      <Switch>
+        <AuthRoute path="/register" component={RegisterContainer} />
+        <AuthRoute path="/login" component={LoginContainer} />
+        <LogoutRoute path="/logout" />
+        <PrivateRoute path="/" component={ComingSoonContainer} />
+      </Switch>
+    </Container>
+  </Router>
+)
 
-function Routes() {
-  return (
-    <Router>
-      <Container>
-        {/*<Header />*/}
-        <Route path="/" component={ComingSoonContainer} />
-      </Container>
-    </Router>
-  )
-}
-
-export default Routes
+export default pure(Routes)

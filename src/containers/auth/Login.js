@@ -1,26 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { RegisterComponent } from 'components'
+import { LoginComponent } from 'components'
 import { createStructuredSelector, createSelector } from 'reselect'
-
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as RegisterActions from 'actions/auth/register'
+import * as LoginActions from 'actions/auth/login'
 
-class Register extends React.Component {
+class Login extends React.Component {
   static propTypes = {
-    register: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
     error: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }
 
-  register = params => {
-    this.props.register(params)
+  login = params => {
+    this.props.login(params)
   }
 
   render() {
     const { error, status } = this.props
-    return <RegisterComponent register={this.register} error={error} status={status} />
+    return <LoginComponent login={this.login} error={error} status={status} />
   }
 }
 
@@ -30,7 +29,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(RegisterActions, dispatch)
+  return bindActionCreators(LoginActions, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
