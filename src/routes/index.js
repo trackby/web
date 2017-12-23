@@ -7,6 +7,7 @@ import PrivateRoute from './PrivateRoute'
 import LogoutRoute from './LogoutRoute'
 import ComingSoonContainer from '../containers/ComingSoonContainer'
 import { RegisterContainer, LoginContainer, ShowContainer } from '../containers'
+import { NotFound } from 'components'
 
 const Container = styled.div`
   text-align: center;
@@ -18,7 +19,8 @@ const Routes = () => (
         <AuthRoute path="/register" component={RegisterContainer} />
         <AuthRoute path="/login" component={LoginContainer} />
         <LogoutRoute path="/logout" />
-        <Route path="/show/:id" component={ShowContainer} />
+        <PrivateRoute path="/show/:id" component={ShowContainer} />
+        <Route path="/404" component={NotFound} />
         <PrivateRoute path="/" component={ComingSoonContainer} />
       </Switch>
     </Container>

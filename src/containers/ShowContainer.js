@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { createStructuredSelector, createSelector } from 'reselect'
+import { createSelector, createStructuredSelector } from 'reselect'
+import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as ShowActions from 'actions/show'
@@ -11,6 +12,8 @@ class ShowContainer extends React.Component {
     getShow: PropTypes.func.isRequired,
     markWatched: PropTypes.func.isRequired,
     unmarkWatched: PropTypes.func.isRequired,
+    getComments: PropTypes.func.isRequired,
+    createComment: PropTypes.func.isRequired,
 
     // eslint-disable-next-line react/forbid-prop-types
     show: PropTypes.object.isRequired,
@@ -21,11 +24,23 @@ class ShowContainer extends React.Component {
   constructor(props) {
     super(props)
     props.getShow(props.match.params.id)
+    props.getComments(props.match.params.id)
   }
 
   render() {
-    const { show, markWatched, unmarkWatched } = this.props
-    return <ShowComponent show={show} markWatched={markWatched} unmarkWatched={unmarkWatched} />
+    const { show, markWatched, unmarkWatched, createComment } = this.props
+    if (show.error) {
+      return <Redirect to="/404" />
+    }
+
+    return (
+      <ShowComponent
+        show={show}
+        markWatched={markWatched}
+        unmarkWatched={unmarkWatched}
+        createComment={createComment}
+      />
+    )
   }
 }
 
