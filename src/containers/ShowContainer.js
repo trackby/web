@@ -1,14 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ImageHeader, TBMLoader } from 'components'
 import { createStructuredSelector, createSelector } from 'reselect'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as ShowActions from 'actions/show'
+import { ShowComponent } from 'components'
 
 class ShowContainer extends React.Component {
   static propTypes = {
     getShow: PropTypes.func.isRequired,
+    markWatched: PropTypes.func.isRequired,
+    unmarkWatched: PropTypes.func.isRequired,
+
     // eslint-disable-next-line react/forbid-prop-types
     show: PropTypes.object.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
@@ -21,8 +24,8 @@ class ShowContainer extends React.Component {
   }
 
   render() {
-    const { fetched, fetching, id, show_name, info, image_url, trailer_url } = this.props.show
-    return fetching && !fetched ? <TBMLoader /> : <ImageHeader title={show_name} info={info} image={image_url} />
+    const { show, markWatched, unmarkWatched } = this.props
+    return <ShowComponent show={show} markWatched={markWatched} unmarkWatched={unmarkWatched} />
   }
 }
 

@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import pure from 'recompose/pure'
-import { WatchButton, Rating, Rate } from 'components'
 import { Grid } from 'semantic-ui-react'
 import styled from 'styled-components'
 
-const ImageHeader = ({ image, title, info, bottomLeftChildren, bottomRightChildren }) => {
+const ImageHeader = ({ image, title, info, bottomLeftChildren, bottomRightChildren, topRightChildren }) => {
   const HeaderContainer = styled.div`
     background-image: url(${image});
     display: flex;
@@ -31,16 +30,11 @@ const ImageHeader = ({ image, title, info, bottomLeftChildren, bottomRightChildr
             <h1>{title}</h1>
             {info}
           </Grid.Column>
-          <Grid.Column width={6}>testasdasf</Grid.Column>
+          <Grid.Column width={6}>{topRightChildren}</Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column floated="left">{bottomLeftChildren}</Grid.Column>
-          <Grid.Column textAlign="right">
-            <WatchButton watched onClick={() => alert('asdasf')} />
-            <Rating value={5} />
-            <Rate onRate={rate => alert(rate)} />
-            {bottomRightChildren}
-          </Grid.Column>
+          <Grid.Column textAlign="right">{bottomRightChildren}</Grid.Column>
         </Grid.Row>
       </Grid>
     </HeaderContainer>
@@ -49,16 +43,20 @@ const ImageHeader = ({ image, title, info, bottomLeftChildren, bottomRightChildr
 
 ImageHeader.propTypes = {
   image: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  info: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  info: PropTypes.string,
   bottomLeftChildren: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   bottomRightChildren: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  topRightChildren: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 }
 
 ImageHeader.defaultProps = {
+  title: '',
+  info: '',
   image: 'http://www.awardsdaily.com/tv/wp-content/uploads/2016/05/mr.-robot-key-art.jpg',
   bottomLeftChildren: [],
   bottomRightChildren: [],
+  topRightChildren: [],
 }
 
 export default pure(ImageHeader)
