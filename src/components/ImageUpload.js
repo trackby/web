@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Button, Form, Icon, Message } from 'semantic-ui-react'
+import { Button, Form, Icon, Message, Grid, Image, Header } from 'semantic-ui-react'
 
 export default class ImageUpload extends React.Component {
   static propTypes = {
@@ -46,34 +46,40 @@ export default class ImageUpload extends React.Component {
     reader.readAsDataURL(file)
   }
 
-  StyledMessage = styled(Message)`
-    background-color: #2f2f2f !important;
-    color: #ececec !important;
+  StyledGrid = styled(Grid)`
+    height: 100vh;
+    vertical-align: middle;
   `
+
   render() {
     const { error, uploaded, uploading } = this.props
-    const { StyledMessage } = this
-    const ErrorComponent = error ? <StyledMessage>Uppss.. There is some error during the process.</StyledMessage> : null
-    const SuccessComponent = uploaded ? <StyledMessage>Successfully Uploaded! :) </StyledMessage> : null
+    const { StyledGrid } = this
+    const ErrorComponent = error ? <Message color="red">Uppss.. There is some error during the process.</Message> : null
+    const SuccessComponent = uploaded ? <Message color="blue">Successfully Uploaded! :) </Message> : null
     const { imagePreviewUrl } = this.state
+    const MessageComponent = ErrorComponent || SuccessComponent
     let $imagePreview = null
 
     if (imagePreviewUrl) {
-      $imagePreview = <img src={imagePreviewUrl} alt="Uploaded" />
+      $imagePreview = <Image src={imagePreviewUrl} centered alt="Preview" fluid />
     }
 
     return (
-      <div>
-        {ErrorComponent}
-        {SuccessComponent}
-        <Form onSubmit={this.handleSubmit} size="small">
-          <Form.Input type="file" color="green" fluid size="large" onChange={this.handleImageChange} />
-          <Button type="submit" color="green" fluid size="large" disabled={uploading}>
-            {uploading ? <Icon name="asterisk" loading /> : 'Upload'}
-          </Button>
-        </Form>
-        {$imagePreview}
-      </div>
+      <StyledGrid textAlign="center">
+        <Grid.Column verticalAlign="middle" style={{ maxWidth: 400 }}>
+          <Header as="h3" icon textAlign="center">
+            <Icon name="upload" circular inverted />
+          </Header>
+          <Form onSubmit={this.handleSubmit} size="small">
+            <Form.Input type="file" color="green" fluid size="large" onChange={this.handleImageChange} />
+            {$imagePreview}
+            <Button type="submit" color="green" fluid size="large" disabled={uploading}>
+              {uploading ? <Icon name="asterisk" loading /> : 'Upload'}
+            </Button>
+          </Form>
+          {MessageComponent}
+        </Grid.Column>
+      </StyledGrid>
     )
   }
 }
