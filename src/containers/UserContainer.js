@@ -3,49 +3,49 @@ import PropTypes from 'prop-types'
 import { createSelector, createStructuredSelector } from 'reselect'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import * as FriendshipActions from 'actions/friendship'
-import { FriendsComponent } from 'components'
+import { UserComponent } from 'components'
 
-class FriendsContainer extends React.Component {
+class UserContainer extends React.Component {
   static propTypes = {
-    getFriends: PropTypes.func.isRequired,
-    getRequests: PropTypes.func.isRequired,
     addFriend: PropTypes.func.isRequired,
     removeFriend: PropTypes.func.isRequired,
-    approveRequest: PropTypes.func.isRequired,
-    denyRequest: PropTypes.func.isRequired,
+    getFriendshipStatus: PropTypes.func.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    otherUser: PropTypes.object.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     user: PropTypes.object.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    match: PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props)
-    const { user, getFriends, getRequests } = props
-    getFriends(user.username)
-    getRequests()
+    const { user, otherUser, getFriendshipStatus } = props
+    if (user.id != otherUser.id) {
+      getFriendshipStatus(otherUser.id)
+    }
   }
 
   render() {
-    const { user, addFriend, removeFriend, approveRequest, denyRequest } = this.props
+    const { user, otherUser, addFriend, removeFriend } = this.props
 
-    return (
-      <FriendsComponent
-        user={user}
-        addFriend={addFriend}
-        removeFriend={removeFriend}
-        approveRequest={approveRequest}
-        denyRequest={denyRequest}
-      />
+    return user.id == otherUser.id ? (
+      <Redirect to="/404/" />
+    ) : (
+      <UserComponent otherUser={otherUser} addFriend={addFriend} removeFriend={removeFriend} />
     )
   }
 }
 
 const mapStateToProps = createStructuredSelector({
   user: createSelector(state => state.user, user => user),
+  otherUser: createSelector(state => state.otherUser, otherUser => otherUser),
 })
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(FriendshipActions, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FriendsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

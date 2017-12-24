@@ -36,28 +36,28 @@ export default function show(state = initialState, action) {
     case SHOW_RESET:
       return initialState
     case WATCH_SHOW:
-      if (action.payload && action.payload.id == state.id) {
+      if (action.payload && action.payload.show_name === state.show_name) {
         return Object.assign({}, state, { watched: true })
       }
       return state
     case WATCH_SHOW_ERROR:
-      if (action.payload && action.payload.id == state.id) {
+      if (action.payload && action.payload.show_name === state.show_name) {
         return Object.assign({}, state, { watched: false })
       }
       return state
     case UNWATCH_SHOW:
-      if (action.payload && action.payload.id == state.id) {
+      if (action.payload && action.payload.show_name === state.show_name) {
         return Object.assign({}, state, { watched: false })
       }
       return state
     case UNWATCH_SHOW_ERROR:
-      if (action.payload && action.payload.id == state.id) {
+      if (action.payload && action.payload.show_name === state.show_name) {
         return Object.assign({}, state, { watched: true })
       }
       return state
 
     case FETCH_COMMENTS_SHOW_SUCCESS:
-      if (action.payload && action.payload.id == state.id) {
+      if (action.payload && action.payload.show_name === state.show_name) {
         return Object.assign({}, state, {
           commentsFetched: true,
           commentsFetching: false,
@@ -67,7 +67,7 @@ export default function show(state = initialState, action) {
       }
       return state
     case ADD_COMMENT_SHOW:
-      if (action.payload && action.payload.id == state.id) {
+      if (action.payload && action.payload.show_name === state.show_name) {
         return Object.assign({}, state, {
           commentsFetched: true,
           commentsFetching: false,
@@ -76,7 +76,7 @@ export default function show(state = initialState, action) {
       }
       return state
     case FETCH_COMMENTS_SHOW:
-      if (action.payload && action.payload.id == state.id) {
+      if (action.payload && action.payload.show_name === state.show_name) {
         return Object.assign({}, state, {
           commentsFetched: false,
           commentsFetching: true,
@@ -85,7 +85,7 @@ export default function show(state = initialState, action) {
       }
       return state
     case FETCH_COMMENTS_SHOW_ERROR:
-      if (action.payload && action.payload.id == state.id) {
+      if (action.payload && action.payload.show_name === state.show_name) {
         return Object.assign({}, state, {
           commentsFetched: false,
           commentsFetching: false,
@@ -95,7 +95,7 @@ export default function show(state = initialState, action) {
       }
       return state
     case RATE_SHOW:
-      if (action.payload && action.payload.id == state.id) {
+      if (action.payload && action.payload.show_name === state.show_name) {
         return Object.assign({}, state, {
           rating: action.payload.rating,
           overall_rating: action.payload.overall_rate,

@@ -5,7 +5,7 @@ import { AvatarHeader, TBMLoader } from 'components'
 import styled from 'styled-components'
 import config from 'config'
 
-export default class ShowComponent extends React.Component {
+export default class FriendsComponent extends React.Component {
   static propTypes = {
     addFriend: PropTypes.func.isRequired,
     removeFriend: PropTypes.func.isRequired,

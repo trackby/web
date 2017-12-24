@@ -2,12 +2,22 @@ import {
   ADD_FRIEND,
   APPROVE_FRIENDSHIP,
   DENY_FRIENDSHIP,
+  FETCH_FRIENDSHIP,
   GET_FRIENDS,
   GET_FRIENDSHIP_REQUESTS,
+  OTHER_USER_INIT,
+  OTHER_USER_RESET,
   REMOVE_FRIEND,
 } from 'constants/ActionTypes'
 
-import { createFriendship, fetchFriends, fetchFriendshipRequests, removeFriendship, updateFriendship } from 'sources'
+import {
+  createFriendship,
+  fetchFriends,
+  fetchFriendship,
+  fetchFriendshipRequests,
+  removeFriendship,
+  updateFriendship,
+} from 'sources'
 
 export const getFriends = username => async dispatch => {
   try {
@@ -64,4 +74,19 @@ export const denyRequest = id => async dispatch => {
   } catch (error) {
     console.log(error)
   }
+}
+
+export const getFriendshipStatus = secondId => async (dispatch, getState) => {
+  try {
+    const friendReq = fetchFriendship(secondId, getState().user.id)
+    const data = (await friendReq).data
+    dispatch({ type: FETCH_FRIENDSHIP, payload: { id: secondId, isFriend: !!data } })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const initOtherUser = (id, username) => dispatch => {
+  dispatch({ type: OTHER_USER_RESET })
+  dispatch({ type: OTHER_USER_INIT, payload: { id, username } })
 }

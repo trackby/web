@@ -24,11 +24,11 @@ import {
   watchShow,
 } from 'sources'
 
-export const getShow = id => async dispatch => {
+export const getShow = name => async dispatch => {
   try {
     dispatch({ type: SHOW_RESET })
     dispatch({ type: FETCH_SHOW })
-    const showReq = fetchShow(id)
+    const showReq = fetchShow(name)
     const data = (await showReq).data
     dispatch({ type: FETCH_SHOW_SUCCESS, payload: data })
   } catch (error) {
@@ -36,64 +36,64 @@ export const getShow = id => async dispatch => {
   }
 }
 
-export const markWatched = id => async (dispatch, getState) => {
+export const markWatched = name => async (dispatch, getState) => {
   try {
     if (getState().show && !getState().show.watched) {
-      dispatch({ type: WATCH_SHOW, payload: { id } })
-      await watchShow(id)
+      dispatch({ type: WATCH_SHOW, payload: { show_name: name } })
+      await watchShow(name)
     }
   } catch (error) {
-    dispatch({ type: WATCH_SHOW_ERROR, payload: { id } })
+    dispatch({ type: WATCH_SHOW_ERROR, payload: { show_name: name } })
   }
 }
 
-export const unmarkWatched = id => async (dispatch, getState) => {
+export const unmarkWatched = name => async (dispatch, getState) => {
   try {
     if (getState().show && getState().show.watched) {
-      dispatch({ type: UNWATCH_SHOW, payload: { id } })
-      await unwatchShow(id)
+      dispatch({ type: UNWATCH_SHOW, payload: { show_name: name } })
+      await unwatchShow(name)
     }
   } catch (error) {
-    dispatch({ type: UNWATCH_SHOW_ERROR, payload: { id } })
+    dispatch({ type: UNWATCH_SHOW_ERROR, payload: { show_name: name } })
   }
 }
 
-export const getComments = id => async dispatch => {
+export const getComments = name => async dispatch => {
   try {
     dispatch({ type: FETCH_COMMENTS_SHOW })
-    const showReq = fetchShowComments(id)
+    const showReq = fetchShowComments(name)
     const data = (await showReq).data
-    dispatch({ type: FETCH_COMMENTS_SHOW_SUCCESS, payload: { id, comments: data } })
+    dispatch({ type: FETCH_COMMENTS_SHOW_SUCCESS, payload: { show_name: name, comments: data } })
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      dispatch({ type: FETCH_COMMENTS_SHOW_SUCCESS, payload: { id, comments: [] } })
+      dispatch({ type: FETCH_COMMENTS_SHOW_SUCCESS, payload: { show_name: name, comments: [] } })
     } else {
       dispatch({ type: FETCH_COMMENTS_SHOW_ERROR })
     }
   }
 }
 
-export const createComment = (id, body) => async dispatch => {
+export const createComment = (name, body) => async dispatch => {
   try {
-    const showReq = createShowComment(id, { comment_body: body })
+    const showReq = createShowComment(name, { comment_body: body })
     const comment = (await showReq).data
     console.log(comment)
-    dispatch({ type: ADD_COMMENT_SHOW, payload: { id, comment } })
+    dispatch({ type: ADD_COMMENT_SHOW, payload: { show_name: name, comment } })
   } catch (error) {
     console.log(error)
   }
 }
 
-export const rateShow = (id, rating) => async (dispatch, getState) => {
+export const rateShow = (name, rating) => async (dispatch, getState) => {
   try {
     if (!getState().show.rating) {
-      const rateReq = createRatingShow(id, rating)
+      const rateReq = createRatingShow(name, rating)
       const data = (await rateReq).data
-      dispatch({ type: RATE_SHOW, payload: { id, rating, ...data } })
+      dispatch({ type: RATE_SHOW, payload: { show_name: name, rating, ...data } })
     } else {
-      const rateReq = updateRatingShow(id, rating)
+      const rateReq = updateRatingShow(name, rating)
       const data = (await rateReq).data
-      dispatch({ type: RATE_SHOW, payload: { id, rating, ...data } })
+      dispatch({ type: RATE_SHOW, payload: { show_name: name, rating, ...data } })
     }
   } catch (error) {
     console.log(error)
