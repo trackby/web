@@ -20,6 +20,8 @@ const fetchFriendship = (firstUser, secondUser) =>
     second_user_id: secondUser,
   })
 
+const upload = file => Rest.post(`upload/`, file)
+
 export {
   authRegister,
   authLogin,
@@ -30,6 +32,7 @@ export {
   createShowComment,
   createRatingShow,
   updateRatingShow,
+  upload,
   createFriendship,
   removeFriendship,
   updateFriendship,
