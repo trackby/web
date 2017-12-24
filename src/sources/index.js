@@ -9,7 +9,6 @@ const fetchShowComments = id => Rest.get(`shows/${id}/comments`)
 const createShowComment = (id, p) => Rest.post(`shows/${id}/comments`, p)
 const createRatingShow = (id, rating) => Rest.post(`shows/${id}/rate`, { rating })
 const updateRatingShow = (id, rating) => Rest.patch(`shows/${id}/rate`, { rating })
-
 const upload = file => Rest.post(`upload/`, file)
 
 export {

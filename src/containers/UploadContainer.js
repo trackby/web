@@ -9,9 +9,9 @@ import * as UploadActions from 'actions/upload'
 class UploadContainer extends React.Component {
   static propTypes = {
     fileUpload: PropTypes.func.isRequired,
-    uploaded: PropTypes.string.isRequired,
-    uploading: PropTypes.string.isRequired,
-    error: PropTypes.string.isRequired,
+    uploaded: PropTypes.bool.isRequired,
+    uploading: PropTypes.bool.isRequired,
+    error: PropTypes.bool.isRequired,
   }
 
   fileUpload = params => {
@@ -25,9 +25,9 @@ class UploadContainer extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  error: createSelector(state => state.error, error => error),
-  uploading: createSelector(state => state.uploading, uploading => uploading),
-  uploaded: createSelector(state => state.uploaded, uploaded => uploaded),
+  error: createSelector(state => state.uploadReducer.error, error => error),
+  uploading: createSelector(state => state.uploadReducer.uploading, uploading => uploading),
+  uploaded: createSelector(state => state.uploadReducer.uploaded, uploaded => uploaded),
 })
 
 function mapDispatchToProps(dispatch) {

@@ -8,11 +8,11 @@ export default class ImageUpload extends React.Component {
     fileUpload: PropTypes.func.isRequired,
     uploading: PropTypes.bool.isRequired,
     uploaded: PropTypes.bool.isRequired,
-    error: PropTypes.string.isRequired,
+    error: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
-    error: '',
+    error: false,
     uploading: false,
     uploaded: false,
   }
@@ -20,23 +20,22 @@ export default class ImageUpload extends React.Component {
   state = {
     file: '',
     imagePreviewUrl: '',
+    category: 'users',
   }
 
   handleSubmit = e => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('photo', this.state.file)
-    formData.append('category', 'users')
+    formData.append('category', this.state.category)
 
     this.props.fileUpload(formData)
   }
 
   handleImageChange = e => {
-    console.log(this.state.file)
-    this.setState({ file: e.target.files[0] })
-
     const reader = new FileReader()
     const file = e.target.files[0]
+    this.setState({ file })
 
     reader.onloadend = () => {
       this.setState({
@@ -54,7 +53,7 @@ export default class ImageUpload extends React.Component {
   render() {
     const { error, uploaded, uploading } = this.props
     const { StyledMessage } = this
-    const ErrorComponent = error ? <StyledMessage>{error}</StyledMessage> : null
+    const ErrorComponent = error ? <StyledMessage>Uppss.. There is some error during the process.</StyledMessage> : null
     const SuccessComponent = uploaded ? <StyledMessage>Successfully Uploaded! :) </StyledMessage> : null
     const { imagePreviewUrl } = this.state
     let $imagePreview = null
