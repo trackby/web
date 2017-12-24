@@ -5,11 +5,12 @@ import { createSelector, createStructuredSelector } from 'reselect'
 import { reuseToken } from 'actions/auth/login'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { isJwtExpired } from 'utils/jwt'
+import { TBMLoader } from 'components'
 
 class PrivateRoute extends React.Component {
   static propTypes = {
-    status: PropTypes.string.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    auth: PropTypes.object.isRequired,
     path: PropTypes.string.isRequired,
     component: PropTypes.func.isRequired,
     reuseToken: PropTypes.func.isRequired,
@@ -20,15 +21,14 @@ class PrivateRoute extends React.Component {
   }
 
   render() {
-    const { status, path, component } = this.props
-    console.log(status)
-    const token = localStorage.getItem('token')
-    return token && !isJwtExpired(token) ? <Route path={path} component={component} /> : <Redirect to="/login" />
+    const { path, component, auth } = this.props
+    if (auth.error.length > 0) return <Redirect to="/login" />
+    return auth.status === 'authenticated' ? <Route path={path} component={component} /> : <TBMLoader />
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  status: createSelector(state => state.auth.status, status => status),
+  auth: createSelector(state => state.auth, status => status),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({ reuseToken }, dispatch)
