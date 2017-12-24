@@ -23,7 +23,6 @@ class PrivateRoute extends React.Component {
     const { status, path, component } = this.props
     console.log(status)
     const token = localStorage.getItem('token')
-
     return token && !isJwtExpired(token) ? <Route path={path} component={component} /> : <Redirect to="/login" />
   }
 }

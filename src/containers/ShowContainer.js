@@ -14,6 +14,7 @@ class ShowContainer extends React.Component {
     unmarkWatched: PropTypes.func.isRequired,
     getComments: PropTypes.func.isRequired,
     createComment: PropTypes.func.isRequired,
+    rateShow: PropTypes.func.isRequired,
 
     // eslint-disable-next-line react/forbid-prop-types
     show: PropTypes.object.isRequired,
@@ -28,7 +29,7 @@ class ShowContainer extends React.Component {
   }
 
   render() {
-    const { show, markWatched, unmarkWatched, createComment } = this.props
+    const { show, markWatched, unmarkWatched, createComment, rateShow } = this.props
     if (show.error) {
       return <Redirect to="/404" />
     }
@@ -39,6 +40,7 @@ class ShowContainer extends React.Component {
         markWatched={markWatched}
         unmarkWatched={unmarkWatched}
         createComment={createComment}
+        rateShow={rateShow}
       />
     )
   }

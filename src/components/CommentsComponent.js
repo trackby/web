@@ -22,11 +22,12 @@ export default class CommentsComponent extends React.Component {
   handleCommentCreate = () => {
     const { body } = this.state
     this.props.createComment(body)
+    this.setState({ body: '' })
   }
 
   renderComments = () => {
     const { comments } = this.props
-    const commentComponents = comments.map((c, i) => (
+    return comments.map((c, i) => (
       <Comment key={`comment-${i}`}>
         <Comment.Avatar src={c.image_url ? c.image_url : 'http://placehold.it/100x100'} />
         <Comment.Content>
@@ -42,8 +43,6 @@ export default class CommentsComponent extends React.Component {
         </Comment.Content>
       </Comment>
     ))
-
-    return commentComponents
   }
 
   render() {

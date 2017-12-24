@@ -1,13 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Header, Segment } from 'semantic-ui-react'
 import { CommentsComponent, ImageHeader, Rate, Rating, TBMLoader, WatchButton } from 'components'
+import styled from 'styled-components'
 
 export default class ShowComponent extends React.Component {
   static propTypes = {
     markWatched: PropTypes.func.isRequired,
     unmarkWatched: PropTypes.func.isRequired,
     createComment: PropTypes.func.isRequired,
+    rateShow: PropTypes.func.isRequired,
+
     // eslint-disable-next-line react/forbid-prop-types
     show: PropTypes.object.isRequired,
   }
@@ -25,6 +28,20 @@ export default class ShowComponent extends React.Component {
     createComment(show.id, body)
   }
 
+  handleRate = rate => {
+    const { show, rateShow } = this.props
+    rateShow(show.id, rate)
+  }
+
+  BigSpan = styled.span`
+    font-size: 18px;
+    padding-right: 15px;
+  `
+
+  Container = styled.div`
+    margin: 10px;
+  `
+
   render() {
     const {
       fetched,
@@ -33,6 +50,11 @@ export default class ShowComponent extends React.Component {
       info,
       image_url,
       watched,
+      director_name,
+      writer_name,
+      season_count,
+      rating,
+      overall_rating,
       commentsFetched,
       commentsFetching,
       comments,
@@ -40,29 +62,72 @@ export default class ShowComponent extends React.Component {
       commentsError,
     } = this.props.show
 
+    const seasonCount = (
+      <this.BigSpan>
+        {season_count} Season{season_count > 1 ? 's' : ''}
+      </this.BigSpan>
+    )
+
     const actionComponents = (
       <div>
         <WatchButton watched={!!watched} onClick={this.handleWatch} />
-        <Rating value={5} />
-        <Rate onRate={rate => alert(rate)} />
+        <Rating value={overall_rating} />
+        <Rate onRate={this.handleRate} value={rating} />
+        {seasonCount}
       </div>
     )
+
+    const director = director_name ? (
+      <div>
+        <Header inverted size="small">
+          Directed by
+        </Header>
+        {director_name}
+      </div>
+    ) : null
+
+    const writer = writer_name ? (
+      <Segment vertical>
+        <Header inverted size="small">
+          Written by
+        </Header>
+        {writer_name}
+      </Segment>
+    ) : null
+
+    const showDetails = (
+      <Segment vertical>
+        {director}
+        {writer}
+      </Segment>
+    )
+
     return fetching && !fetched ? (
       <TBMLoader />
     ) : (
       <div>
-        <ImageHeader title={show_name} info={info} image={image_url} bottomRightChildren={actionComponents} />
-        <Grid centered padded>
-          <Grid.Column>
-            <CommentsComponent
-              commentsFetched={commentsFetched}
-              commentsFetching={commentsFetching}
-              commentsError={commentsError}
-              comments={comments}
-              createComment={this.handleComment}
-            />
-          </Grid.Column>
-        </Grid>
+        <ImageHeader
+          title={show_name}
+          info={info}
+          image={image_url}
+          topRightChildren={showDetails}
+          bottomRightChildren={actionComponents}
+        />
+        <this.Container>
+          <Grid padded>
+            <Grid.Row centered>
+              <Grid.Column width={10}>
+                <CommentsComponent
+                  commentsFetched={commentsFetched}
+                  commentsFetching={commentsFetching}
+                  commentsError={commentsError}
+                  comments={comments}
+                  createComment={this.handleComment}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </this.Container>
       </div>
     )
   }

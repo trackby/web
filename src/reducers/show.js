@@ -12,6 +12,7 @@ import {
   UNWATCH_SHOW_ERROR,
   WATCH_SHOW,
   WATCH_SHOW_ERROR,
+  RATE_SHOW,
 } from 'constants/ActionTypes'
 
 const initialState = {
@@ -90,6 +91,14 @@ export default function show(state = initialState, action) {
           commentsFetching: false,
           commentsError: true,
           comments: [],
+        })
+      }
+      return state
+    case RATE_SHOW:
+      if (action.payload && action.payload.id == state.id) {
+        return Object.assign({}, state, {
+          rating: action.payload.rating,
+          overall_rating: action.payload.overall_rate,
         })
       }
       return state

@@ -33,8 +33,12 @@ const ImageHeader = ({ image, title, info, bottomLeftChildren, bottomRightChildr
           <Grid.Column width={6}>{topRightChildren}</Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column floated="left">{bottomLeftChildren}</Grid.Column>
-          <Grid.Column textAlign="right">{bottomRightChildren}</Grid.Column>
+          <Grid.Column floated="left" width={4}>
+            {bottomLeftChildren}
+          </Grid.Column>
+          <Grid.Column textAlign="right" width={12}>
+            {bottomRightChildren}
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     </HeaderContainer>

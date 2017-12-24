@@ -1,13 +1,14 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import pure from 'recompose/pure'
+import { NotFound } from 'components'
 import AuthRoute from './AuthRoute'
 import PrivateRoute from './PrivateRoute'
 import LogoutRoute from './LogoutRoute'
+
 import ComingSoonContainer from '../containers/ComingSoonContainer'
-import { RegisterContainer, LoginContainer, ShowContainer } from '../containers'
-import { NotFound } from 'components'
+import { LoginContainer, RegisterContainer, ShowContainer } from '../containers'
 
 const Container = styled.div`
   text-align: center;
