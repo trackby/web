@@ -69,9 +69,10 @@ class ShowComponent extends React.Component {
     Object.keys(parameter).map(k => {
       if (parameter[k]) filteredParam[k] = parameter[k]
     })
-    modifyShow(show.show_name, filteredParam).then(() =>
+    modifyShow(show.show_name, filteredParam).then(() => {
       this.props.history.push(`/show/${parameter.show_name ? parameter.show_name : show.show_name}`)
-    )
+      this.handleModifyClose()
+    })
   }
 
   BigSpan = styled.span`

@@ -22,7 +22,7 @@ export default class ModalForm extends React.Component {
   static constructor = props => {
     let fields = {}
     props.fields.map(f => {
-      fields[f.name] = props.isModify ? f.value : ''
+      fields[f.name] = ''
       return null
     })
     this.fields = fields
