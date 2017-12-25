@@ -87,6 +87,7 @@ const deleteShow = show => Rest.del(`shows/`, { show })
 const deleteSeason = (show, season) => Rest.del(`shows/`, { show, season })
 const deleteEpisode = (show, season, episode) => Rest.del(`shows/`, { show, season, episode })
 
+const fetchReports = () => Rest.get('reports/')
 export {
   authRegister,
   authLogin,
@@ -113,4 +114,5 @@ export {
   deleteShow,
   deleteSeason,
   deleteEpisode,
+  fetchReports,
 }

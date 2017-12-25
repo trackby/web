@@ -4,6 +4,7 @@ import show from './show'
 import uploadReducer from './upload'
 import user from './user'
 import otherUser from './otherUser'
+import report from './report'
 
 const rootReducer = combineReducers({
   auth,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   uploadReducer,
   user,
   otherUser,
+  report,
 })
 
 export default rootReducer

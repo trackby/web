@@ -11,10 +11,16 @@ const Container = styled.div`
 
 const Episode = ({ episode }) => (
   <List.Item>
-    <Image size="mini" src={episode.image_url > 3 ? episode.image_url : 'http://placehold.it/150x150'} />
+    <Image
+      size="mini"
+      src={episode.image_url && episode.image_url.length > 3 ? episode.image_url : 'http://placehold.it/150x150'}
+    />
     <List.Content>
       <List.Header as="a">{episode.episode_name}</List.Header>
-      <List.Description>{episode.info}</List.Description>
+      <List.Description>
+        {episode.info.slice(0, 100)}
+        {episode.info.length > 100 ? '...' : ''}}
+      </List.Description>
     </List.Content>
   </List.Item>
 )

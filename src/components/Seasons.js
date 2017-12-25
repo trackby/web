@@ -11,7 +11,10 @@ const Container = styled.div`
 
 const Season = ({ season }) => (
   <List.Item>
-    <Image size="mini" src={season.image_url.length > 3 ? season.image_url : 'http://placehold.it/150x150'} />
+    <Image
+      size="mini"
+      src={season.image_url && season.image_url.length > 3 ? season.image_url : 'http://placehold.it/150x150'}
+    />
     <List.Content>
       <List.Header as="a">
         {season.show_name} - Season {season.season_no}

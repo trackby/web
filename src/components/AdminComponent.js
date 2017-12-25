@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { AvatarHeader, BigButton, ModalForm, TBMLoader } from 'components'
+import { AvatarHeader, BigButton, ModalForm, TBMLoader, Reports } from 'components'
 
 export default class AdminComponent extends React.Component {
   static propTypes = {
     addShow: PropTypes.func.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    reports: PropTypes.any,
   }
-
+  static defaultProps = {
+    reports: null,
+  }
   state = {
     open: false,
   }
@@ -39,6 +43,7 @@ export default class AdminComponent extends React.Component {
           onSubmit={this.handleAddShow}
           onClose={this.handleClose}
         />
+        <Reports reports={this.props.reports} />
       </div>
     )
   }
