@@ -22,6 +22,71 @@ const fetchFriendship = (firstUser, secondUser) =>
 
 const upload = file => Rest.post(`upload/`, file)
 
+// Admin endpoints
+const createShow = (show, { image_url, info, trailer_url, director_name, writer_name }) =>
+  Rest.post(
+    `shows/`,
+    {
+      image_url,
+      info,
+      trailer_url,
+      director_name,
+      writer_name,
+    },
+    { show }
+  )
+
+const createSeason = (show, season, { info, image_url, trailer_url, season_year }) =>
+  Rest.post(
+    `shows/`,
+
+    {
+      info,
+      image_url,
+      trailer_url,
+      season_year,
+    },
+    {
+      show,
+      season,
+    }
+  )
+
+const createEpisode = (show, season, episode, { info, image_url, trailer_url, episode_name }) =>
+  Rest.post(
+    `shows/`,
+    {
+      info,
+      image_url,
+      trailer_url,
+      episode_name,
+    },
+    {
+      show,
+      season,
+      episode,
+    }
+  )
+
+const updateShow = (show, params) => Rest.patch(`shows/`, params, { show })
+
+const updateSeason = (show, season, params) =>
+  Rest.patch(`shows/`, params, {
+    show,
+    season,
+  })
+
+const updateEpisode = (show, season, episode, params) =>
+  Rest.patch(`shows/`, params, {
+    show,
+    season,
+    episode,
+  })
+
+const deleteShow = show => Rest.del(`shows/`, { show })
+const deleteSeason = (show, season) => Rest.del(`shows/`, { show, season })
+const deleteEpisode = (show, season, episode) => Rest.del(`shows/`, { show, season, episode })
+
 export {
   authRegister,
   authLogin,
@@ -39,4 +104,13 @@ export {
   fetchFriends,
   fetchFriendshipRequests,
   fetchFriendship,
+  createShow,
+  createSeason,
+  createEpisode,
+  updateShow,
+  updateSeason,
+  updateEpisode,
+  deleteShow,
+  deleteSeason,
+  deleteEpisode,
 }

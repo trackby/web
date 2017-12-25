@@ -1,6 +1,6 @@
 import { AUTH_LOGIN, AUTH_ERROR, AUTH_LOGIN_SUCCESS } from 'constants/ActionTypes'
 import { authLogin } from 'sources'
-import { isJwtExpired, getId } from 'utils/jwt'
+import { isJwtExpired, getId, isAdmin } from 'utils/jwt'
 
 export const login = ({ username, password }) => async dispatch => {
   try {
@@ -11,7 +11,8 @@ export const login = ({ username, password }) => async dispatch => {
     localStorage.setItem('username', username)
     const id = getId(loginData.token)
     localStorage.setItem('user_id', id)
-    dispatch({ type: AUTH_LOGIN_SUCCESS, payload: { token: loginData.token, username, id } })
+    const admin = isAdmin(loginData.token)
+    dispatch({ type: AUTH_LOGIN_SUCCESS, payload: { token: loginData.token, username, id, isAdmin: admin } })
   } catch (error) {
     if (error.response) {
       if (error.response.status === 401) {
@@ -33,8 +34,9 @@ export const reuseToken = () => (dispatch, getState) => {
       const token = localStorage.getItem('token')
       const username = localStorage.getItem('username')
       const id = localStorage.getItem('user_id')
+      const admin = isAdmin(token)
       if (token && !isJwtExpired(token)) {
-        dispatch({ type: AUTH_LOGIN_SUCCESS, payload: { token, username, id } })
+        dispatch({ type: AUTH_LOGIN_SUCCESS, payload: { token, username, id, isAdmin: admin } })
       }
     }
   } catch (error) {

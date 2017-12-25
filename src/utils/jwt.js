@@ -22,3 +22,10 @@ export const getId = token => {
     return -1
   }
 }
+export const isAdmin = token => {
+  try {
+    return jwtDecode(token).isAdmin
+  } catch (error) {
+    return false
+  }
+}

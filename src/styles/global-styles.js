@@ -41,4 +41,11 @@ injectGlobal`
     color: #BFBFBF !important;
   }
   
+  .ui.list>.item .description {
+    display: block;
+    color: #EFEFEF;
+   }
+  .ui.list>.item a.header {
+    color: #EFEFEF !important;
+  }
 `
