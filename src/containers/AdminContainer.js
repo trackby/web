@@ -3,40 +3,19 @@ import PropTypes from 'prop-types'
 import { createSelector, createStructuredSelector } from 'reselect'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as FriendshipActions from 'actions/friendship'
-import { FriendsComponent } from 'components'
+import * as AdminActions from 'actions/admin'
+import { AdminComponent } from 'components'
 
 class AdminContainer extends React.Component {
   static propTypes = {
-    getFriends: PropTypes.func.isRequired,
-    getRequests: PropTypes.func.isRequired,
-    addFriend: PropTypes.func.isRequired,
-    removeFriend: PropTypes.func.isRequired,
-    approveRequest: PropTypes.func.isRequired,
-    denyRequest: PropTypes.func.isRequired,
+    addShow: PropTypes.func.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     user: PropTypes.object.isRequired,
   }
 
-  constructor(props) {
-    super(props)
-    const { user, getFriends, getRequests } = props
-    getFriends(user.username)
-    getRequests()
-  }
-
   render() {
-    const { user, addFriend, removeFriend, approveRequest, denyRequest } = this.props
-
-    return (
-      <FriendsComponent
-        user={user}
-        addFriend={addFriend}
-        removeFriend={removeFriend}
-        approveRequest={approveRequest}
-        denyRequest={denyRequest}
-      />
-    )
+    const { addShow } = this.props
+    return <AdminComponent addShow={addShow} />
   }
 }
 
@@ -45,7 +24,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(FriendshipActions, dispatch)
+  return bindActionCreators(AdminActions, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer)

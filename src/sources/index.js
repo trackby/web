@@ -26,28 +26,29 @@ const upload = file => Rest.post(`upload/`, file)
 const createShow = (show, { image_url, info, trailer_url, director_name, writer_name }) =>
   Rest.post(
     `shows/`,
-    { show },
     {
       image_url,
       info,
       trailer_url,
       director_name,
       writer_name,
-    }
+    },
+    { show }
   )
 
 const createSeason = (show, season, { info, image_url, trailer_url, season_year }) =>
   Rest.post(
     `shows/`,
-    {
-      show,
-      season,
-    },
+
     {
       info,
       image_url,
       trailer_url,
       season_year,
+    },
+    {
+      show,
+      season,
     }
   )
 
@@ -55,40 +56,32 @@ const createEpisode = (show, season, episode, { info, image_url, trailer_url, ep
   Rest.post(
     `shows/`,
     {
-      show,
-      season,
-      episode,
-    },
-    {
       info,
       image_url,
       trailer_url,
       episode_name,
+    },
+    {
+      show,
+      season,
+      episode,
     }
   )
 
 const updateShow = (show, params) => Rest.patch(`shows/`, { show }, params)
 
 const updateSeason = (show, season, params) =>
-  Rest.patch(
-    `shows/`,
-    {
-      show,
-      season,
-    },
-    params
-  )
+  Rest.patch(`shows/`, params, {
+    show,
+    season,
+  })
 
 const updateEpisode = (show, season, episode, params) =>
-  Rest.patch(
-    `shows/`,
-    {
-      show,
-      season,
-      episode,
-    },
-    params
-  )
+  Rest.patch(`shows/`, params, {
+    show,
+    season,
+    episode,
+  })
 
 const deleteShow = show => Rest.del(`shows/`, { show })
 const deleteSeason = (show, season) => Rest.del(`shows/`, { show, season })
