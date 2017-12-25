@@ -14,6 +14,7 @@ import {
   RegisterContainer,
   ShowContainer,
   UserContainer,
+  UploadContainer,
 } from '../containers'
 
 const Container = styled.div`
@@ -26,6 +27,7 @@ const Routes = () => (
         <AuthRoute path="/register" component={RegisterContainer} />
         <AuthRoute path="/login" component={LoginContainer} />
         <LogoutRoute path="/logout" />
+        <PrivateRoute path="/upload" component={UploadContainer} />
         <PrivateRoute path="/show/:name" component={ShowContainer} />
         <PrivateRoute path="/friends" component={FriendsContainer} />
         <PrivateRoute path="/user/:username-:id" component={UserContainer} />
