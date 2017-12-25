@@ -13,6 +13,7 @@ import {
   WATCH_SHOW,
   WATCH_SHOW_ERROR,
   RATE_SHOW,
+  UPDATE_SHOW,
 } from 'constants/ActionTypes'
 
 const initialState = {
@@ -29,6 +30,8 @@ export default function show(state = initialState, action) {
   switch (action.type) {
     case FETCH_SHOW:
       return Object.assign({}, state, { fetching: true })
+    case UPDATE_SHOW:
+      return Object.assign({}, state, { ...action.payload })
     case FETCH_SHOW_SUCCESS:
       return Object.assign({}, state, { fetched: true, fetching: false, ...action.payload })
     case FETCH_SHOW_ERROR:
