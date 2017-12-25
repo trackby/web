@@ -21,18 +21,28 @@ export default class ImageUpload extends React.Component {
     file: '',
     imagePreviewUrl: '',
     category: 'users',
+    id: '',
   }
+
+  categoryOptions = [
+    { key: 't', text: 'Tv Show', value: 'tvshow' },
+    { key: 'm', text: 'Movie', value: 'movie' },
+    { key: 'u', text: 'Users', value: 'users' },
+  ]
 
   handleSubmit = e => {
     e.preventDefault()
     const formData = new FormData()
     formData.append('photo', this.state.file)
     formData.append('category', this.state.category)
+    formData.append('id', this.state.id)
 
     this.props.fileUpload(formData)
+    this.setState({ imagePreviewUrl: '', file: '' })
   }
 
   handleImageChange = e => {
+    e.preventDefault()
     const reader = new FileReader()
     const file = e.target.files[0]
     this.setState({ file })
@@ -44,6 +54,10 @@ export default class ImageUpload extends React.Component {
       })
     }
     reader.readAsDataURL(file)
+  }
+
+  handleIdChange = e => {
+    this.setState({ id: e.target.value })
   }
 
   StyledGrid = styled(Grid)`
@@ -71,7 +85,14 @@ export default class ImageUpload extends React.Component {
             <Icon name="upload" circular inverted />
           </Header>
           <Form onSubmit={this.handleSubmit} size="small">
-            <Form.Input type="file" color="green" fluid size="large" onChange={this.handleImageChange} />
+            <Form.Select
+              required
+              options={this.categoryOptions}
+              placeholder="Category"
+              onChange={(e, { value }) => this.setState({ category: value })}
+            />
+            <Form.Input required size="tiny" type="text" placeholder="2578" fluid onChange={this.handleIdChange} />
+            <Form.Input required type="file" color="green" fluid size="large" onChange={this.handleImageChange} />
             {$imagePreview}
             <Button type="submit" color="green" fluid size="large" disabled={uploading}>
               {uploading ? <Icon name="asterisk" loading /> : 'Upload'}
