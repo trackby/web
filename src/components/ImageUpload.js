@@ -25,9 +25,11 @@ export default class ImageUpload extends React.Component {
   }
 
   categoryOptions = [
-    { key: 't', text: 'Tv Show', value: 'tvshow' },
-    { key: 'm', text: 'Movie', value: 'movie' },
     { key: 'u', text: 'Users', value: 'users' },
+    { key: 't', text: 'Tv Show', value: 'tvshow' },
+    { key: 's', text: 'Season', value: 'season' },
+    { key: 'e', text: 'Episode', value: 'episode' },
+    { key: 'm', text: 'Movie', value: 'movie' },
   ]
 
   handleSubmit = e => {
