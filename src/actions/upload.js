@@ -7,13 +7,12 @@ export const fileUpload = file => async dispatch => {
     dispatch({ type: UPLOAD_REQUEST })
     console.dir(file)
     await upload(file)
+    dispatch({ type: UPLOAD_SUCCESS, payload: 'Successfully uploaded' })
   } catch (error) {
     console.log(error)
     if (error.response && error.response.status === 400) {
       dispatch({ type: UPLOAD_FAILURE, payload: 'Bad Request' })
-    } else {
-      dispatch({ type: UPLOAD_FAILURE, payload: 'Unknown error' })
     }
+    dispatch({ type: UPLOAD_FAILURE, payload: 'Unknown error' })
   }
-  dispatch({ type: UPLOAD_SUCCESS, payload: 'Successfully uploaded' })
 }
