@@ -11,16 +11,18 @@ export default class ModalForm extends React.Component {
     fields: PropTypes.array.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    isModify: PropTypes.bool,
   }
 
   static defaultProps = {
     show: false,
+    isModify: false,
   }
 
   static constructor = props => {
     let fields = {}
     props.fields.map(f => {
-      fields[f.name] = ''
+      fields[f.name] = props.isModify ? f.value : ''
       return null
     })
     this.fields = fields
@@ -35,6 +37,7 @@ export default class ModalForm extends React.Component {
 
   handleSubmit = () => {
     this.props.onSubmit(this.state)
+
     this.setState({ ...this.fields })
   }
 
@@ -43,7 +46,7 @@ export default class ModalForm extends React.Component {
       <Form.Input
         key={`form-input-${f.name}`}
         {...f}
-        required
+        required={!this.props.isModify}
         fluid
         iconPosition="left"
         value={this.state[f.name]}
@@ -60,7 +63,7 @@ export default class ModalForm extends React.Component {
           <Form size="large" onSubmit={this.handleSubmit}>
             {this.renderFields()}
             <Button color="green" fluid size="large">
-              Create
+              Submit
             </Button>
           </Form>
         </Modal.Content>

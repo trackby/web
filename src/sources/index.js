@@ -68,7 +68,7 @@ const createEpisode = (show, season, episode, { info, image_url, trailer_url, ep
     }
   )
 
-const updateShow = (show, params) => Rest.patch(`shows/`, { show }, params)
+const updateShow = (show, params) => Rest.patch(`shows/`, params, { show })
 
 const updateSeason = (show, season, params) =>
   Rest.patch(`shows/`, params, {

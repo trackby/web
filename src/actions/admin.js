@@ -25,3 +25,11 @@ export const removeShow = (show, params) => async dispatch => {
     console.log(error)
   }
 }
+
+export const modifyShow = (show, params) => async dispatch => {
+  try {
+    await updateShow(show, params)
+  } catch (error) {
+    console.log(error)
+  }
+}
