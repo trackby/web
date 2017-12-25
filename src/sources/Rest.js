@@ -10,20 +10,20 @@ const apiSettings = () => {
 }
 
 class Rest {
-  static async post(url, parameter) {
-    return axios.post(url, parameter, apiSettings())
+  static async post(url, parameter, query = {}) {
+    return axios.post(url, parameter, Object.assign({}, { params: query }, apiSettings()))
   }
 
-  static async patch(url, parameter) {
-    return axios.patch(url, parameter, apiSettings())
+  static async patch(url, parameter, query = {}) {
+    return axios.patch(url, parameter, Object.assign({}, { params: query }, apiSettings()))
   }
 
   static async get(url, parameter = {}) {
     return axios.get(url, Object.assign({}, { params: parameter }, apiSettings()))
   }
 
-  static async del(url) {
-    return axios.delete(url, apiSettings())
+  static async del(url, query = {}, parameter = {}) {
+    return axios.delete(url, Object.assign({}, { params: query, data: parameter }, apiSettings()))
   }
 }
 

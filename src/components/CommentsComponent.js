@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Comment, Form, Header, Loader } from 'semantic-ui-react'
+import { UserLink } from 'components'
 import moment from 'moment'
 
 export default class CommentsComponent extends React.Component {
@@ -31,7 +32,9 @@ export default class CommentsComponent extends React.Component {
       <Comment key={`comment-${i}`}>
         <Comment.Avatar src={c.image_url ? c.image_url : 'http://placehold.it/100x100'} />
         <Comment.Content>
-          <Comment.Author as="span">{c.username}</Comment.Author>
+          <Comment.Author>
+            <UserLink username={c.username} id={c.id} />
+          </Comment.Author>
           <Comment.Metadata>
             {' '}
             <div>{moment(c.created_at).fromNow(true)}</div>

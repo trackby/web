@@ -11,7 +11,7 @@ export default function auth(state = initialState, action) {
     case AUTH_REGISTER:
       return Object.assign({}, state, { error: '', status: 'progress' })
     case AUTH_LOGIN_SUCCESS:
-      return Object.assign({}, state, { token: action.payload, error: '', status: 'authenticated' })
+      return Object.assign({}, state, { token: action.payload.token, error: '', status: 'authenticated' })
     case AUTH_LOGOUT:
       return Object.assign({}, state, { token: '', error: '', status: 'not_authenticated' })
     default:

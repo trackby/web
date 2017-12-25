@@ -10,7 +10,6 @@ export default class ShowComponent extends React.Component {
     unmarkWatched: PropTypes.func.isRequired,
     createComment: PropTypes.func.isRequired,
     rateShow: PropTypes.func.isRequired,
-
     // eslint-disable-next-line react/forbid-prop-types
     show: PropTypes.object.isRequired,
   }
@@ -18,19 +17,19 @@ export default class ShowComponent extends React.Component {
   handleWatch = () => {
     const { show, markWatched, unmarkWatched } = this.props
     if (show.watched) {
-      unmarkWatched(show.id)
+      unmarkWatched(show.show_name)
     } else {
-      markWatched(show.id)
+      markWatched(show.show_name)
     }
   }
   handleComment = body => {
     const { show, createComment } = this.props
-    createComment(show.id, body)
+    createComment(show.show_name, body)
   }
 
   handleRate = rate => {
     const { show, rateShow } = this.props
-    rateShow(show.id, rate)
+    rateShow(show.show_name, rate)
   }
 
   BigSpan = styled.span`

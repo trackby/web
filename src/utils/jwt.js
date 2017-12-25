@@ -13,3 +13,12 @@ export const isJwtExpired = token => {
   }
   return true
 }
+
+export const getId = token => {
+  try {
+    const { id } = jwtDecode(token)
+    return id
+  } catch (error) {
+    return -1
+  }
+}
