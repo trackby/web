@@ -22,8 +22,8 @@ class Rest {
     return axios.get(url, Object.assign({}, { params: parameter }, apiSettings()))
   }
 
-  static async del(url, query = {}) {
-    return axios.delete(url, Object.assign({}, { params: query }, apiSettings()))
+  static async del(url, query = {}, parameter = {}) {
+    return axios.delete(url, Object.assign({}, { params: query, data: parameter }, apiSettings()))
   }
 }
 

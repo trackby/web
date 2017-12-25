@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Header, Image, List } from 'semantic-ui-react'
-import { AvatarHeader, TBMLoader } from 'components'
+import { AvatarHeader, TBMLoader, UserLink } from 'components'
 import styled from 'styled-components'
 import config from 'config'
 
@@ -44,11 +44,13 @@ export default class FriendsComponent extends React.Component {
   `
   FriendRequests = () => {
     const requests = this.props.user.friendshipRequests.map(r => (
-      <List.Item>
+      <List.Item key={r.id}>
         {/*<Image avatar src={`${config.apiURL}user/${r.id}/profile-photo`} />*/}
         <Image avatar src={'http://placehold.it/300x300'} />
         <List.Content>
-          <List.Header as="a">{r.username}</List.Header>
+          <List.Header>
+            <UserLink username={r.username} id={r.id} />
+          </List.Header>
           <List.Description>
             <this.Approve onClick={this.handleApprove(r.id)}>Approve</this.Approve>
             <this.Deny onClick={this.handleDeny(r.id)}>Deny</this.Deny>

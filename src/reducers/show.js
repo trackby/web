@@ -62,7 +62,7 @@ export default function show(state = initialState, action) {
           commentsFetched: true,
           commentsFetching: false,
           commentsError: false,
-          comments: [...action.payload.comments],
+          comments: action.payload.comments,
         })
       }
       return state

@@ -8,7 +8,6 @@ export default class UserComponent extends React.Component {
   static propTypes = {
     addFriend: PropTypes.func.isRequired,
     removeFriend: PropTypes.func.isRequired,
-    getFriendshipStatus: PropTypes.func.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     otherUser: PropTypes.object.isRequired,
   }
@@ -32,12 +31,17 @@ export default class UserComponent extends React.Component {
   `
 
   render() {
-    const { id, username, fetched, isFriend } = this.props.otherUser
-    const actionComponent = isFriend ? (
-      <this.Approve onClick={this.handleAdd(id)}>Add friend</this.Approve>
-    ) : (
-      <this.Deny onClick={this.handleRemove(id)}>Add friend</this.Deny>
-    )
+    const { id, username, fetched, friendshipStatus } = this.props.otherUser
+    const actionComponent =
+      friendshipStatus === 'NOT_FRIEND' ? (
+        <this.Approve onClick={this.handleAdd(id)} href="#">
+          Add friend
+        </this.Approve>
+      ) : (
+        <this.Deny onClick={this.handleRemove(id)} href="#">
+          Remove friend
+        </this.Deny>
+      )
     return !fetched ? (
       <TBMLoader />
     ) : (
@@ -45,10 +49,10 @@ export default class UserComponent extends React.Component {
         <AvatarHeader
         // image={id ? `${config.apiURL}user/${id}/profile-photo` : ''}
         />
-        <Header textAlign="center" size="medium">
+        <Header textAlign="center" size="medium" inverted>
           {username}
         </Header>
-        {actionComponent}
+        {friendshipStatus === 'PENDING' ? 'Pending' : actionComponent}
       </div>
     )
   }

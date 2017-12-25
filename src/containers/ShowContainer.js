@@ -24,8 +24,7 @@ class ShowContainer extends React.Component {
 
   constructor(props) {
     super(props)
-    props.getShow(props.match.params.name)
-    props.getComments(props.match.params.name)
+    props.getShow(props.match.params.name).then(() => props.getComments(props.match.params.name))
   }
 
   render() {

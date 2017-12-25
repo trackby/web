@@ -5,13 +5,14 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import * as FriendshipActions from 'actions/friendship'
-import { UserComponent } from 'components'
+import { UserComponent, TBMLoader } from 'components'
 
 class UserContainer extends React.Component {
   static propTypes = {
     addFriend: PropTypes.func.isRequired,
     removeFriend: PropTypes.func.isRequired,
     getFriendshipStatus: PropTypes.func.isRequired,
+    initOtherUser: PropTypes.func.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     otherUser: PropTypes.object.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
@@ -22,19 +23,22 @@ class UserContainer extends React.Component {
 
   constructor(props) {
     super(props)
-    const { user, otherUser, getFriendshipStatus } = props
-    if (user.id != otherUser.id) {
-      getFriendshipStatus(otherUser.id)
+    const { user, match, getFriendshipStatus, initOtherUser } = props
+    if (user.username !== match.params.username) {
+      getFriendshipStatus(match.params.id)
+      initOtherUser(match.params.id, match.params.username)
     }
   }
 
   render() {
-    const { user, otherUser, addFriend, removeFriend } = this.props
+    const { user, otherUser, addFriend, removeFriend, match } = this.props
 
-    return user.id == otherUser.id ? (
+    return user.username === match.params.username ? (
       <Redirect to="/404/" />
-    ) : (
+    ) : otherUser.fetched ? (
       <UserComponent otherUser={otherUser} addFriend={addFriend} removeFriend={removeFriend} />
+    ) : (
+      <TBMLoader />
     )
   }
 }

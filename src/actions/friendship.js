@@ -43,7 +43,7 @@ export const addFriend = id => async dispatch => {
   try {
     const friendReq = createFriendship(id)
     const data = (await friendReq).data
-    dispatch({ type: ADD_FRIEND, payload: data })
+    dispatch({ type: ADD_FRIEND, payload: { id } })
   } catch (error) {
     console.log(error)
   }
@@ -52,7 +52,7 @@ export const addFriend = id => async dispatch => {
 export const removeFriend = id => async dispatch => {
   try {
     await removeFriendship(id)
-    dispatch({ type: REMOVE_FRIEND })
+    dispatch({ type: REMOVE_FRIEND, payload: { id } })
   } catch (error) {
     console.log(error)
   }
@@ -80,7 +80,10 @@ export const getFriendshipStatus = secondId => async (dispatch, getState) => {
   try {
     const friendReq = fetchFriendship(secondId, getState().user.id)
     const data = (await friendReq).data
-    dispatch({ type: FETCH_FRIENDSHIP, payload: { id: secondId, isFriend: !!data } })
+    const status = data.friendship
+      ? data.friendship.status !== 'REJECTED' ? data.friendship.status : 'NOT_FRIEND'
+      : 'NOT_FRIEND'
+    dispatch({ type: FETCH_FRIENDSHIP, payload: { id: secondId, friendshipStatus: status } })
   } catch (error) {
     console.log(error)
   }
