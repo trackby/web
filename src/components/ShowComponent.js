@@ -1,17 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Header, Segment } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
 import { CommentsComponent, ImageHeader, Rate, Rating, TBMLoader, WatchButton } from 'components'
+
 import styled from 'styled-components'
 
-export default class ShowComponent extends React.Component {
+class ShowComponent extends React.Component {
   static propTypes = {
     markWatched: PropTypes.func.isRequired,
     unmarkWatched: PropTypes.func.isRequired,
     createComment: PropTypes.func.isRequired,
     rateShow: PropTypes.func.isRequired,
+    removeShow: PropTypes.func.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     show: PropTypes.object.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    user: PropTypes.object.isRequired,
   }
 
   handleWatch = () => {
@@ -32,6 +37,11 @@ export default class ShowComponent extends React.Component {
     rateShow(show.show_name, rate)
   }
 
+  handleRemove = () => {
+    const { show, removeShow } = this.props
+    removeShow(show.show_name).then(() => this.props.history.push('/admin'))
+  }
+
   BigSpan = styled.span`
     font-size: 18px;
     padding-right: 15px;
@@ -39,6 +49,18 @@ export default class ShowComponent extends React.Component {
 
   Container = styled.div`
     margin: 10px;
+  `
+
+  Remove = styled.a`
+    color: red;
+    font-size: 18px;
+    :hover {
+      color: #efefef;
+    }
+    :visited,
+    :active {
+      color: red !important;
+    }
   `
 
   render() {
@@ -94,10 +116,17 @@ export default class ShowComponent extends React.Component {
       </Segment>
     ) : null
 
+    const removeButton = this.props.user.isAdmin ? (
+      <this.Remove onClick={this.handleRemove} href="#">
+        Remove this show
+      </this.Remove>
+    ) : null
+
     const showDetails = (
       <Segment vertical>
         {director}
         {writer}
+        {removeButton}
       </Segment>
     )
 
@@ -131,3 +160,4 @@ export default class ShowComponent extends React.Component {
     )
   }
 }
+export default withRouter(ShowComponent)

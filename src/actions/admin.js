@@ -17,3 +17,11 @@ export const addShow = (show, params) => async dispatch => {
     console.log(error)
   }
 }
+
+export const removeShow = (show, params) => async dispatch => {
+  try {
+    await deleteShow(show)
+  } catch (error) {
+    console.log(error)
+  }
+}

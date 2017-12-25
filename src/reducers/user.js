@@ -19,7 +19,7 @@ const initialState = {
 export default function user(state = initialState, action) {
   switch (action.type) {
     case AUTH_LOGIN_SUCCESS:
-      return { ...state, username: action.payload.username, id: action.payload.id }
+      return { ...state, username: action.payload.username, id: action.payload.id, isAdmin: action.payload.isAdmin }
     case GET_FRIENDS:
       return { ...state, friendsFetched: true, friends: action.payload }
     case GET_FRIENDSHIP_REQUESTS:

@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as ShowActions from 'actions/show'
+import * as AdminActions from 'actions/admin'
 import { ShowComponent } from 'components'
 
 class ShowContainer extends React.Component {
@@ -15,9 +16,12 @@ class ShowContainer extends React.Component {
     getComments: PropTypes.func.isRequired,
     createComment: PropTypes.func.isRequired,
     rateShow: PropTypes.func.isRequired,
+    removeShow: PropTypes.func.isRequired,
 
     // eslint-disable-next-line react/forbid-prop-types
     show: PropTypes.object.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    user: PropTypes.object.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
     match: PropTypes.object.isRequired,
   }
@@ -28,7 +32,7 @@ class ShowContainer extends React.Component {
   }
 
   render() {
-    const { show, markWatched, unmarkWatched, createComment, rateShow } = this.props
+    const { show, markWatched, unmarkWatched, createComment, rateShow, removeShow, user } = this.props
     if (show.error) {
       return <Redirect to="/404" />
     }
@@ -40,6 +44,8 @@ class ShowContainer extends React.Component {
         unmarkWatched={unmarkWatched}
         createComment={createComment}
         rateShow={rateShow}
+        removeShow={removeShow}
+        user={user}
       />
     )
   }
@@ -47,10 +53,11 @@ class ShowContainer extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   show: createSelector(state => state.show, show => show),
+  user: createSelector(state => state.user, user => user),
 })
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ShowActions, dispatch)
+  return bindActionCreators({ ...ShowActions, ...AdminActions }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowContainer)
