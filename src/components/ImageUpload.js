@@ -40,7 +40,7 @@ export default class ImageUpload extends React.Component {
     formData.append('id', this.state.id)
 
     this.props.fileUpload(formData)
-    this.setState({ imagePreviewUrl: '', file: '' })
+    this.setState({ imagePreviewUrl: '' })
   }
 
   handleImageChange = e => {
