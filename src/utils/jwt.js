@@ -24,7 +24,7 @@ export const getId = token => {
 }
 export const isAdmin = token => {
   try {
-    return jwtDecode(token).isAdmin
+    return jwtDecode(token).role === 'ADMIN'
   } catch (error) {
     return false
   }
