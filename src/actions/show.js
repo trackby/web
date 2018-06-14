@@ -77,7 +77,6 @@ export const createComment = (name, body) => async dispatch => {
   try {
     const showReq = createShowComment(name, { comment_body: body })
     const comment = (await showReq).data
-    console.log(comment)
     dispatch({ type: ADD_COMMENT_SHOW, payload: { show_name: name, comment } })
   } catch (error) {
     console.log(error)

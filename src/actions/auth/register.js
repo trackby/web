@@ -2,10 +2,10 @@ import { AUTH_REGISTER, AUTH_ERROR } from 'constants/ActionTypes'
 import { authRegister } from 'sources'
 import { login } from './login'
 
-export const register = ({ username, password, age, email }) => async dispatch => {
+export const register = ({ username, password, email }) => async dispatch => {
   try {
     dispatch({ type: AUTH_REGISTER })
-    await authRegister({ username, password, age, email })
+    await authRegister({ username, password, email })
     login({ username, password })(dispatch)
   } catch (error) {
     console.log(error)

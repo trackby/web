@@ -16,12 +16,12 @@ export default class RegisterComponent extends React.Component {
     status: '',
   }
 
-  state = { email: '', username: '', password: '', age: '' }
+  state = { email: '', username: '', password: '' }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
   handleSubmit = () => {
-    const { username, email, password, age } = this.state
-    this.props.register({ username, email, password, age })
+    const { username, email, password } = this.state
+    this.props.register({ username, email, password })
   }
 
   StyledSegment = styled(Segment)`
@@ -41,7 +41,7 @@ export default class RegisterComponent extends React.Component {
   render() {
     const { StyledSegment, StyledMessage, StyledGrid } = this
     const { error, status } = this.props
-    const { username, email, password, age } = this.state
+    const { username, email, password } = this.state
 
     const ErrorComponent = error ? <StyledMessage>{error}</StyledMessage> : null
 
@@ -75,17 +75,6 @@ export default class RegisterComponent extends React.Component {
                 placeholder="Username"
                 name="username"
                 value={username}
-                onChange={this.handleChange}
-              />
-              <Form.Input
-                key="register.age"
-                required
-                fluid
-                icon="calendar"
-                iconPosition="left"
-                placeholder="Age"
-                name="age"
-                value={age}
                 onChange={this.handleChange}
               />
               <Form.Input

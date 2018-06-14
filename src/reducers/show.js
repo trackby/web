@@ -26,60 +26,64 @@ const initialState = {
   comments: [],
 }
 
-export default function show(state = initialState, action) {
-  switch (action.type) {
+export default function show(state = initialState, { payload, type }) {
+  // case insensitive string comparasion for payload and action show names
+  const showName = payload ? payload.show_name : ''
+  const compareStrings = (a, b) => (a || '').toLowerCase() === (b || '').toLowerCase()
+
+  switch (type) {
     case FETCH_SHOW:
       return Object.assign({}, state, { fetching: true })
     case UPDATE_SHOW:
-      return Object.assign({}, state, { ...action.payload })
+      return Object.assign({}, state, { ...payload })
     case FETCH_SHOW_SUCCESS:
-      return Object.assign({}, state, { fetched: true, fetching: false, ...action.payload })
+      return Object.assign({}, state, { fetched: true, fetching: false, ...payload })
     case FETCH_SHOW_ERROR:
       return Object.assign({}, state, { fetched: false, fetching: false, error: true })
     case SHOW_RESET:
       return initialState
     case WATCH_SHOW:
-      if (action.payload && action.payload.show_name === state.show_name) {
+      if (payload && compareStrings(showName, state.show_name)) {
         return Object.assign({}, state, { watched: true })
       }
       return state
     case WATCH_SHOW_ERROR:
-      if (action.payload && action.payload.show_name === state.show_name) {
+      if (payload && compareStrings(showName, state.show_name)) {
         return Object.assign({}, state, { watched: false })
       }
       return state
     case UNWATCH_SHOW:
-      if (action.payload && action.payload.show_name === state.show_name) {
+      if (payload && compareStrings(showName, state.show_name)) {
         return Object.assign({}, state, { watched: false })
       }
       return state
     case UNWATCH_SHOW_ERROR:
-      if (action.payload && action.payload.show_name === state.show_name) {
+      if (payload && compareStrings(showName, state.show_name)) {
         return Object.assign({}, state, { watched: true })
       }
       return state
 
     case FETCH_COMMENTS_SHOW_SUCCESS:
-      if (action.payload && action.payload.show_name === state.show_name) {
+      if (payload && compareStrings(showName, state.show_name)) {
         return Object.assign({}, state, {
           commentsFetched: true,
           commentsFetching: false,
           commentsError: false,
-          comments: action.payload.comments,
+          comments: payload.comments || [],
         })
       }
       return state
     case ADD_COMMENT_SHOW:
-      if (action.payload && action.payload.show_name === state.show_name) {
+      if (payload && compareStrings(showName, state.show_name)) {
         return Object.assign({}, state, {
           commentsFetched: true,
           commentsFetching: false,
-          comments: [...state.comments, action.payload.comment],
+          comments: [...state.comments, payload.comment],
         })
       }
       return state
     case FETCH_COMMENTS_SHOW:
-      if (action.payload && action.payload.show_name === state.show_name) {
+      if (payload && compareStrings(showName, state.show_name)) {
         return Object.assign({}, state, {
           commentsFetched: false,
           commentsFetching: true,
@@ -88,7 +92,7 @@ export default function show(state = initialState, action) {
       }
       return state
     case FETCH_COMMENTS_SHOW_ERROR:
-      if (action.payload && action.payload.show_name === state.show_name) {
+      if (payload && compareStrings(showName, state.show_name)) {
         return Object.assign({}, state, {
           commentsFetched: false,
           commentsFetching: false,
@@ -98,10 +102,10 @@ export default function show(state = initialState, action) {
       }
       return state
     case RATE_SHOW:
-      if (action.payload && action.payload.show_name === state.show_name) {
+      if (payload && compareStrings(showName, state.show_name)) {
         return Object.assign({}, state, {
-          rating: action.payload.rating,
-          overall_rating: action.payload.overall_rate,
+          rating: payload.rating,
+          overall_rating: payload.overall_rate,
         })
       }
       return state
